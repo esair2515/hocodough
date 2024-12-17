@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hoco Dough Bakery</title>
+    <style>
+        :root {
+            --primary-color: #db7075;
+            --secondary-color: #f8c4c8;
+            --text-color: #333;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #fff;
+            color: var(--text-color);
+        }
+
+        .header {
+            background-color: var(--primary-color);
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .featured-product {
+            display: flex;
+            background-color: #f9f9f9;
+            margin-bottom: 30px;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .featured-product img {
+            width: 50%;
+            object-fit: cover;
+        }
+
+        .featured-product-details {
+            width: 50%;
+            padding: 20px;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .product-card {
+            border: 1px solid var(--secondary-color);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+
+        .product-card:hover {
+            transform: scale(1.05);
+        }
+
+        .product-card img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+
+        .product-details {
+            padding: 15px;
+        }
+
+        .filter-section {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 10% auto;
+            padding: 20px;
+            border-radius: 10px;
+            width: 80%;
+            max-width: 500px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Hoco Dough</h1>
+        <p>Artisan Bakery & Treats</p>
+    </div>
+
+    <div class="container">
+        <div id="featured-product" class="featured-product">
+            <!-- Featured product will be dynamically populated -->
+        </div>
+
+        <div class="filter-section">
+            <select id="category-filter">
+                <option value="">All Categories</option>
+                <option value="Cookies">Cookies</option>
+                <option value="Bread">Bread</option>
+                <option value="Pastry">Pastry</option>
+            </select>
+
+            <select id="diet-filter">
+                <option value="">All Diets</option>
+                <option value="Vegan">Vegan</option>
+                <option value="Gluten-Free">Gluten-Free</option>
+                <option value="Vegetarian">Vegetarian</option>
+            </select>
+
+            <label>
+                <input type="checkbox" id="popular-filter"> Most Popular
+            </label>
+        </div>
+
+        <div id="product-grid" class="product-grid">
+            <!-- Products will be dynamically populated -->
+        </div>
+    </div>
+
+    <div id="payment-modal" class="modal">
+        <div class="modal-content">
+            <h2 id="modal-product-name"></h2>
+            <p id="modal-product-details"></p>
+            <div>
+                <a id="paypal-link" href="#">Pay with PayPal</a>
+                <a id="venmo-link" href="#">Pay with Venmo</a>
+            </div>
+            <button id="close-modal">Close</button>
+        </div>
+    </div>
+
+    <script>
+        var products = [
+            {
+                id: 1,
+                name: "Classic Chocolate Chip Cookies",
+                description: "Soft, chewy cookies with rich chocolate chips",
+                price: 12.99,
+                image: "https://via.placeholder.com/300x300",
+                category: "Cookies",
+                dietaryRestrictions: ["Vegetarian"],
+                popular: true,
+                paypalLink: "https://paypal.me/example",
+                venmoLink: "https://venmo.com/example"
+            },
+            {
+                id: 2,
+                name: "Vegan Banana Bread",
+                description: "Moist banana bread without any animal products",
+                price: 14.75,
+                image: "https://via.placeholder.com/300x300",
+                category: "Bread",
+                dietaryRestrictions: ["Vegan"],
+                popular: true,
+                paypalLink: "https://paypal.me/example",
+                venmoLink: "https://venmo.com/example"
+            },
+            {
+                id: 3,
+                name: "Gluten-Free Lavender Shortbread",
+                description: "Delicate shortbread with a hint of lavender",
+                price: 15.50,
+                image: "https://via.placeholder.com/300x300",
+                category: "Pastry",
+                dietaryRestrictions: ["Gluten-Free"],
+                popular: false,
+                paypalLink: "https://paypal.me/example",
+                venmoLink: "https://venmo.com/example"
+            }
+        ];
+
+        function renderFeaturedProduct() {
+            var featured = products[0];
+            var featuredSection = document.getElementById('featured-product');
+            featuredSection.innerHTML = `
+                <img src="${featured.image}" alt="${featured.name}">
+                <div class="featured-product-details">
+                    <h2>${featured.name}</h2>
+                    <p>${featured.description}</p>
+                    <p>$${featured.price.toFixed(2)}</p>
+                    <button onclick="openPaymentModal(${featured.id})">Order Now</button>
+                </div>
+            `;
+        }
+
+        function renderProducts(filteredProducts) {
+            var grid = document.getElementById('product-grid');
+            grid.innerHTML = filteredProducts.map(function(product) {
+                return `
+                    <div class="product-card">
+                        <img src="${product.image}" alt="${product.name}">
+                        <div class="product-details">
+                            <h3>${product.name}</h3>
+                            <p>${product.description}</p>
+                            <p>$${product.price.toFixed(2)}</p>
+                            <button onclick="openPaymentModal(${product.id})">Order</button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function filterProducts() {
+            var categoryFilter = document.getElementById('category-filter').value;
+            var dietFilter = document.getElementById('diet-filter').value;
+            var popularFilter = document.getElementById('popular-filter').checked;
+
+            var filtered = products.filter(function(product) {
+                var matchCategory = !categoryFilter || product.category === categoryFilter;
+                var matchDiet = !dietFilter || product.dietaryRestrictions.includes(dietFilter);
+                var matchPopular = !popularFilter || product.popular;
+
+                return matchCategory && matchDiet && matchPopular;
+            });
+
+            renderProducts(filtered);
+        }
+
+        function openPaymentModal(productId) {
+            var product = products.find(function(p) { return p.id === productId; });
+            var modal = document.getElementById('payment-modal');
+            
+            document.getElementById('modal-product-name').textContent = product.name;
+            document.getElementById('modal-product-details').innerHTML = `
+                Price: $${product.price.toFixed(2)}<br>
+                Category: ${product.category}<br>
+                Dietary: ${product.dietaryRestrictions.join(', ')}
+            `;
+            
+            document.getElementById('paypal-link').href = product.paypalLink;
+            document.getElementById('venmo-link').href = product.venmoLink;
+
+            modal.style.display = 'block';
+        }
+
+        function closeModal() {
+            document.getElementById('payment-modal').style.display = 'none';
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            renderFeaturedProduct();
+            renderProducts(products);
+
+            document.getElementById('category-filter').addEventListener('change', filterProducts);
+            document.getElementById('diet-filter').addEventListener('change', filterProducts);
+            document.getElementById('popular-filter').addEventListener('change', filterProducts);
+            document.getElementById('close-modal').addEventListener('click', closeModal);
+        });
+    </script>
+</body>
+</html>
