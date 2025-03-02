@@ -3,312 +3,182 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hoco Dough | Artisan Bakery</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <title>Hoco Dough</title>
     <style>
-        :root {
-            --primary-color: #db7075;
-            --secondary-color: #f8c4c8;
-            --accent-gold: #d4af37;
-            --text-dark: #333;
-            --background-light: #fff9f9;
-        }
-
-        * {
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            text-align: center;
+            color: #003366;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
         }
-
-        body {
-            font-family: 'Poppins', sans-serif;
-            background-color: var(--background-light);
-            color: var(--text-dark);
-            line-height: 1.6;
-        }
-
         .header {
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            background: linear-gradient(to bottom right, #003366, #99ccff);
+            padding: 80px;
+            font-size: 3.5em;
+            font-weight: bold;
             color: white;
-            text-align: center;
-            padding: 2rem;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
-
-        .header h1 {
-            font-size: 3rem;
-            font-weight: 700;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-        }
-
-        .header p {
-            font-size: 1.2rem;
-            font-weight: 300;
-            opacity: 0.9;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 1rem;
-        }
-
-        .content-wrapper {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-
-        .filter-section {
-            background-color: white;
-            border-radius: 12px;
-            padding: 1rem;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            gap: 0.5rem;
-        }
-
-        .filter-section select, 
-        .filter-section label {
-            background-color: var(--secondary-color);
-            color: var(--text-dark);
-            border: none;
-            border-radius: 8px;
-            padding: 0.5rem 1rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .filter-section select:hover,
-        .filter-section label:hover {
-            background-color: var(--primary-color);
-            color: white;
-            transform: scale(1.05);
-        }
-
-        .featured-product {
-            background: white;
-            border-radius: 15px;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            box-shadow: 0 6px 12px rgba(0,0,0,0.1);
-            transition: transform 0.3s ease;
-        }
-
-        .featured-product:hover {
-            transform: scale(1.02);
-        }
-
-        .featured-product img {
-            width: 100%;
-            height: 300px;
-            object-fit: cover;
-        }
-
-        .featured-details {
-            padding: 1.5rem;
-        }
-
-        .product-grid {
+        .products {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1rem;
+            gap: 20px;
+            padding: 20px;
+            max-width: 900px;
+            margin: auto;
         }
-
-        .product-card {
+        .card {
             background: white;
-            border-radius: 12px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
             overflow: hidden;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            transition: all 0.3s ease;
-        }
-
-        .product-card:hover {
-            transform: scale(1.05);
-            box-shadow: 0 8px 15px rgba(0,0,0,0.15);
-        }
-
-        .product-card img {
+            position: relative;
             width: 100%;
-            height: 250px;
-            object-fit: cover;
-        }
-
-        .product-details {
-            padding: 1rem;
-        }
-
-        .order-btn {
-            background-color: var(--primary-color);
-            color: white;
-            border: none;
-            border-radius: 25px;
-            padding: 0.5rem 1rem;
-            width: 100%;
+            height: 300px;
+            perspective: 1000px;
             cursor: pointer;
-            transition: all 0.3s ease;
         }
-
-        .order-btn:hover {
-            background-color: var(--accent-gold);
-            transform: scale(1.05);
+        .card-inner {
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+            transition: transform 0.6s;
         }
-
-        @media (max-width: 768px) {
-            .featured-product {
-                flex-direction: column;
-            }
-
-            .filter-section {
-                flex-direction: column;
-            }
+        .card.flipped .card-inner {
+            transform: rotateY(180deg);
+        }
+        .card-front, .card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 15px;
+            box-sizing: border-box;
+            text-align: center;
+        }
+        .card-front {
+            background: #e6f2ff;
+        }
+        .card-back {
+            background: #003366;
+            color: white;
+            transform: rotateY(180deg);
+        }
+        img {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 50%;
+            margin-bottom: 10px;
+        }
+        .price {
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        .payment-link {
+            background: white;
+            color: #003366;
+            padding: 5px 10px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
         }
     </style>
+    <script>
+        function flipCard(card) {
+            document.querySelectorAll('.card').forEach(c => {
+                if (c !== card) c.classList.remove('flipped');
+            });
+            card.classList.toggle('flipped');
+        }
+    </script>
 </head>
 <body>
-    <header class="header">
-        <div class="container">
-            <h1>Hoco Dough</h1>
-            <p>Artisan Bakery & Culinary Delights</p>
-        </div>
-    </header>
-
-    <main class="container">
-        <div class="content-wrapper">
-            <section class="filter-section">
-                <select id="category-filter">
-                    <option value="">All Categories</option>
-                    <option value="Cookies">Cookies</option>
-                    <option value="Bread">Bread</option>
-                    <option value="Pastry">Pastry</option>
-                </select>
-
-                <select id="diet-filter">
-                    <option value="">All Diets</option>
-                    <option value="Vegan">Vegan</option>
-                    <option value="Gluten-Free">Gluten-Free</option>
-                    <option value="Vegetarian">Vegetarian</option>
-                </select>
-
-                <label>
-                    <input type="checkbox" id="popular-filter"> Most Popular
-                </label>
-            </section>
-
-            <section id="featured-product" class="featured-product">
-                <!-- Featured product will be dynamically populated -->
-            </section>
-
-            <section id="product-grid" class="product-grid">
-                <!-- Products will be dynamically populated -->
-            </section>
-        </div>
-    </main>
-
-    <script>
-        var products = [
-            {
-                id: 1,
-                name: "Classic Chocolate Chip Cookies",
-                description: "Soft, chewy cookies with rich chocolate chips",
-                price: 12.99,
-                image: "https://via.placeholder.com/400x300",
-                category: "Cookies",
-                dietaryRestrictions: ["Vegetarian"],
-                popular: true,
-                paypalLink: "https://paypal.me/example",
-                venmoLink: "https://venmo.com/example"
-            },
-            {
-                id: 2,
-                name: "Vegan Banana Bread",
-                description: "Moist banana bread without any animal products",
-                price: 14.75,
-                image: "https://via.placeholder.com/400x300",
-                category: "Bread",
-                dietaryRestrictions: ["Vegan"],
-                popular: true,
-                paypalLink: "https://paypal.me/example",
-                venmoLink: "https://venmo.com/example"
-            },
-            {
-                id: 3,
-                name: "Gluten-Free Lavender Shortbread",
-                description: "Delicate shortbread with a hint of lavender",
-                price: 15.50,
-                image: "https://via.placeholder.com/400x300",
-                category: "Pastry",
-                dietaryRestrictions: ["Gluten-Free"],
-                popular: false,
-                paypalLink: "https://paypal.me/example",
-                venmoLink: "https://venmo.com/example"
-            }
-        ];
-
-        function renderFeaturedProduct() {
-            var featured = products[0];
-            var featuredSection = document.getElementById('featured-product');
-            featuredSection.innerHTML = `
-                <img src="${featured.image}" alt="${featured.name}">
-                <div class="featured-details">
-                    <h2>${featured.name}</h2>
-                    <p>${featured.description}</p>
-                    <p>$${featured.price.toFixed(2)}</p>
-                    <button class="order-btn" onclick="openPaymentModal(${featured.id})">Order Now</button>
+    <div class="header">Hoco Dough</div>
+    <div class="products">
+        <div class="card" onclick="flipCard(this)">
+            <div class="card-inner">
+                <div class="card-front">
+                    <h3>Chocolate Chip Cookie</h3>
+                    <img src="cookie.jpg" alt="Cookie">
+                    <p class="price">$3.00</p>
                 </div>
-            `;
-        }
-
-        function renderProducts(filteredProducts) {
-            var grid = document.getElementById('product-grid');
-            grid.innerHTML = filteredProducts.map(function(product) {
-                return `
-                    <div class="product-card">
-                        <img src="${product.image}" alt="${product.name}">
-                        <div class="product-details">
-                            <h3>${product.name}</h3>
-                            <p>${product.description}</p>
-                            <p>$${product.price.toFixed(2)}</p>
-                            <button class="order-btn" onclick="openPaymentModal(${product.id})">Order</button>
-                        </div>
-                    </div>
-                `;
-            }).join('');
-        }
-
-        function filterProducts() {
-            var categoryFilter = document.getElementById('category-filter').value;
-            var dietFilter = document.getElementById('diet-filter').value;
-            var popularFilter = document.getElementById('popular-filter').checked;
-
-            var filtered = products.filter(function(product) {
-                var matchCategory = !categoryFilter || product.category === categoryFilter;
-                var matchDiet = !dietFilter || product.dietaryRestrictions.includes(dietFilter);
-                var matchPopular = !popularFilter || product.popular;
-
-                return matchCategory && matchDiet && matchPopular;
-            });
-
-            renderProducts(filtered);
-        }
-
-        function openPaymentModal(productId) {
-            // Payment modal logic would go here
-            alert('Payment functionality coming soon!');
-        }
-
-        document.addEventListener('DOMContentLoaded', function() {
-            renderFeaturedProduct();
-            renderProducts(products);
-
-            document.getElementById('category-filter').addEventListener('change', filterProducts);
-            document.getElementById('diet-filter').addEventListener('change', filterProducts);
-            document.getElementById('popular-filter').addEventListener('change', filterProducts);
-        });
-    </script>
+                <div class="card-back">
+                    <p>Ingredients: Flour, Sugar, Butter, Chocolate Chips</p>
+                    <a href="#" class="payment-link">Buy Now</a>
+                </div>
+            </div>
+        </div>
+        <div class="card" onclick="flipCard(this)">
+            <div class="card-inner">
+                <div class="card-front">
+                    <h3>Blueberry Muffin</h3>
+                    <img src="muffin.jpg" alt="Muffin">
+                    <p class="price">$3.50</p>
+                </div>
+                <div class="card-back">
+                    <p>Ingredients: Flour, Sugar, Butter, Blueberries</p>
+                    <a href="#" class="payment-link">Buy Now</a>
+                </div>
+            </div>
+        </div>
+        <div class="card" onclick="flipCard(this)">
+            <div class="card-inner">
+                <div class="card-front">
+                    <h3>Croissant</h3>
+                    <img src="croissant.jpg" alt="Croissant">
+                    <p class="price">$4.00</p>
+                </div>
+                <div class="card-back">
+                    <p>Ingredients: Flour, Butter, Yeast, Sugar</p>
+                    <a href="#" class="payment-link">Buy Now</a>
+                </div>
+            </div>
+        </div>
+        <div class="card" onclick="flipCard(this)">
+            <div class="card-inner">
+                <div class="card-front">
+                    <h3>Cinnamon Roll</h3>
+                    <img src="cinnamon.jpg" alt="Cinnamon Roll">
+                    <p class="price">$4.50</p>
+                </div>
+                <div class="card-back">
+                    <p>Ingredients: Flour, Sugar, Butter, Cinnamon</p>
+                    <a href="#" class="payment-link">Buy Now</a>
+                </div>
+            </div>
+        </div>
+        <div class="card" onclick="flipCard(this)">
+            <div class="card-inner">
+                <div class="card-front">
+                    <h3>Macaron</h3>
+                    <img src="macaron.jpg" alt="Macaron">
+                    <p class="price">$2.50</p>
+                </div>
+                <div class="card-back">
+                    <p>Ingredients: Almond Flour, Sugar, Egg Whites</p>
+                    <a href="#" class="payment-link">Buy Now</a>
+                </div>
+            </div>
+        </div>
+        <div class="card" onclick="flipCard(this)">
+            <div class="card-inner">
+                <div class="card-front">
+                    <h3>Brownie</h3>
+                    <img src="brownie.jpg" alt="Brownie">
+                    <p class="price">$3.50</p>
+                </div>
+                <div class="card-back">
+                    <p>Ingredients: Cocoa, Sugar, Butter, Flour</p>
+                    <a href="google.com" class="payment-link">Buy Now</a>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
