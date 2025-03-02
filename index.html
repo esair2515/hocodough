@@ -15,14 +15,14 @@
         }
         .header {
             background: linear-gradient(to bottom right, #003366, #99ccff);
-            padding: 40px;
-            font-size: 2.5em;
+            padding: 100px; /* Increased padding for a bigger banner */
+            font-size: 4em; /* Increased font size */
             font-weight: bold;
             color: white;
         }
         .products {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Default grid for smaller screens */
             gap: 20px;
             padding: 20px;
             max-width: 100%;
@@ -92,8 +92,8 @@
         /* Responsive adjustments */
         @media (max-width: 768px) {
             .header {
-                font-size: 2em;
-                padding: 30px;
+                font-size: 2.5em;
+                padding: 40px;
             }
             .card {
                 height: 280px;
@@ -121,6 +121,14 @@
             img {
                 width: 60px;
                 height: 60px;
+            }
+        }
+
+        /* Large screen - fixed 3 by 3 grid */
+        @media (min-width: 1200px) {
+            .products {
+                grid-template-columns: repeat(3, 1fr); /* 3 columns */
+                grid-template-rows: repeat(3, auto); /* 3 rows */
             }
         }
     </style>
