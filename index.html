@@ -19,14 +19,13 @@
             font-size: 4em; /* Increased font size */
             font-weight: bold;
             color: white;
-            position: absolute;
-            top: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 90%; /* Makes it responsive */
-            border-radius: 15px; /* Rounded corners */
+            position: relative;
+            width: 90%;
+            margin: 0 auto;
+            border-radius: 25px; /* Rounded corners */
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             z-index: 1;
+            margin-top: 20px; /* Space between title and cards */
         }
         .products {
             display: grid;
@@ -98,11 +97,12 @@
             font-weight: bold;
         }
 
-        /* Responsive adjustments */
+        /* Mobile responsive adjustments */
         @media (max-width: 768px) {
             .header {
                 font-size: 3em; /* Slightly larger title */
-                padding: 60px; /* Adjust padding for mobile */
+                padding: 80px; /* Adjust padding for mobile */
+                margin-top: 40px; /* Space between banner and cards */
             }
             .products {
                 grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Smaller grid for tablets */
@@ -122,7 +122,8 @@
         @media (max-width: 480px) {
             .header {
                 font-size: 2em; /* Slightly larger title */
-                padding: 40px; /* Adjust padding for smaller screens */
+                padding: 60px; /* Adjust padding for smaller screens */
+                margin-top: 30px; /* Space between banner and cards */
             }
             .products {
                 grid-template-columns: 1fr; /* Stacked single column for mobile */
