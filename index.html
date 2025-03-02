@@ -26,6 +26,7 @@
             width: 90%; /* Makes it responsive */
             border-radius: 15px; /* Rounded corners */
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            z-index: 1;
         }
         .products {
             display: grid;
@@ -34,6 +35,7 @@
             padding: 20px;
             max-width: 100%;
             margin: 160px auto 20px; /* Added margin to ensure space for the floating banner */
+            z-index: 0; /* Ensures products are below the title banner */
         }
         .card {
             background: white;
@@ -99,8 +101,8 @@
         /* Responsive adjustments */
         @media (max-width: 768px) {
             .header {
-                font-size: 2.5em;
-                padding: 40px;
+                font-size: 3em; /* Slightly larger title */
+                padding: 60px; /* Adjust padding for mobile */
             }
             .products {
                 grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Smaller grid for tablets */
@@ -119,8 +121,8 @@
 
         @media (max-width: 480px) {
             .header {
-                font-size: 1.5em;
-                padding: 20px;
+                font-size: 2em; /* Slightly larger title */
+                padding: 40px; /* Adjust padding for smaller screens */
             }
             .products {
                 grid-template-columns: 1fr; /* Stacked single column for mobile */
